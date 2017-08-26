@@ -23,8 +23,8 @@ data <- read.csv.sql("household_power_consumption.txt",
 #dim(data)
 
 
-### hist
-png("plot1.png", width=480, height=480)
-hist(data$Global_active_power, main="Global Active Power", 
-     xlab="Global Active Power (kilowatts)", ylab="Frequency", col="Red")
+### plot
+png("plot2.png", width=480, height=480)
+plot(x = data$Time, y = data$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+
 dev.off()
