@@ -21,11 +21,30 @@ data <- read.csv.sql("household_power_consumption.txt",
                      header = TRUE,
                      sql="select * from file where Date in ('1/2/2007', '2/2/2007')")
 #dim(data)
+
 ### merge date & time +make it machine readable
 data$Date <-as.POSIXct(paste(data$Date,data$Time),format = "%d/%m/%Y %H:%M:%S")
 
-### plot
-png("plot2.png", width=480, height=480)
-plot(x = data$Date, y = data$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
+###plot
+png("plot4.png", width=480, height=480)
+par(mfrow=c(2,2))
+
+# window1
+plot(data$Date, data$Global_active_power, type="l", xlab="", ylab="Global Active Power")
+# window2
+plot(data$Date,data$Voltage, type="l", xlab="datetime", ylab="Voltage")
+# window3
+plot(data$Date, data$Sub_metering_1,col="black", type="l", xlab="", ylab="Energy sub metering")
+lines(data$Date, data$Sub_metering_2,col="red")
+lines(data$Date, data$Sub_metering_3,col="blue")
+legend("topright"
+       , col=c("black","red","blue")
+       , c("Sub_metering_1  ",
+           "Sub_metering_2  ", 
+           "Sub_metering_3  ")
+       , lty="solid"
+       , bty="n") 
+# window4
+plot(data$Date, data$Global_reactive_power, type="l", xlab="datetime", ylab="Global_reactive_power")
 
 dev.off()
